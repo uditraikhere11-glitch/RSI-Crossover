@@ -1,0 +1,26 @@
+[Unit]
+Description=Standalone Chartink to Discord Scanner
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=chartink
+Group=chartink
+WorkingDirectory=/opt/chartink-discord
+EnvironmentFile=/etc/chartink-discord.env
+Environment=PYTHONUNBUFFERED=1
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/chartink-discord/.cache/ms-playwright
+ExecStart=/opt/chartink-discord/.venv/bin/python /opt/chartink-discord/app.py
+Restart=always
+RestartSec=10
+TimeoutStopSec=30
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/opt/chartink-discord/data
+
+[Install]
+WantedBy=multi-user.target
